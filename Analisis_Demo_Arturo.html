@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De Presentador a Cerrador — Análisis de Demo Comercial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1E2761;
+    --navy-deep:#141B49;
+    --navy-2:#263B8C;
+    --ice:#CADCFC;
+    --coral:#E4572E;
+    --green:#1C7293;
+    --amber:#C98A1B;
+    --grey:#7A8AA0;
+    --paper:#F6F7FB;
+    --card:#FFFFFF;
+    --ink:#1B1F2E;
+    --muted:#63697c;
+    --line:#E4E7F0;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Fraunces',serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;background:var(--coral);z-index:100;width:0%;transition:width .1s linear;}
+
+  /* nav */
+  nav{
+    position:sticky;top:0;z-index:90;
+    background:rgba(246,247,251,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;align-items:center;gap:1.4rem;
+    padding:.85rem 1.5rem;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav-brand{font-family:'Fraunces',serif;font-weight:600;font-size:1rem;color:var(--navy);white-space:nowrap;margin-right:.4rem;}
+  .nav-link{
+    font-size:.82rem;font-weight:600;color:var(--muted);text-decoration:none;
+    white-space:nowrap;padding:.35rem .1rem;border-bottom:2px solid transparent;
+    transition:color .2s, border-color .2s;
+  }
+  .nav-link:hover, .nav-link.active{color:var(--navy);border-color:var(--coral);}
+
+  section{padding:5.5rem 1.5rem;max-width:var(--maxw);margin:0 auto;}
+  section.wide{max-width:1220px;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--coral);margin-bottom:1rem;
+  }
+  .eyebrow::before{content:'';width:18px;height:2px;background:var(--coral);display:inline-block;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:radial-gradient(circle at 82% -10%, var(--navy-2) 0%, transparent 42%), var(--navy-deep);
+    color:#fff;
+    padding:7rem 1.5rem 6rem;
+    position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:'';position:absolute;right:-8%;bottom:-30%;width:520px;height:520px;
+    border-radius:50%;background:var(--navy-2);opacity:.55;
+  }
+  .hero-inner{max-width:var(--maxw);margin:0 auto;position:relative;z-index:2;}
+  .hero .eyebrow{color:var(--ice);}
+  .hero .eyebrow::before{background:var(--coral);}
+  .hero h1{
+    font-size:clamp(2.4rem,5.4vw,4.1rem);
+    line-height:1.04;font-weight:600;margin:0 0 1.1rem;
+    letter-spacing:-.01em;
+  }
+  .hero h1 em{font-style:italic;color:var(--ice);font-weight:500;}
+  .hero p.lead{font-size:1.15rem;color:#C7D0EE;max-width:640px;line-height:1.55;margin:0 0 2.4rem;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:.6rem;}
+  .chip{
+    font-size:.78rem;font-weight:600;color:#fff;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);padding:.45rem .9rem;border-radius:100px;
+  }
+  .scoreline{margin-top:3.2rem;display:flex;align-items:baseline;gap:1.4rem;flex-wrap:wrap;}
+  .scoreline .big{font-size:3.2rem;font-weight:700;color:var(--coral);}
+  .scoreline .arrow{font-size:1.6rem;color:var(--ice);}
+  .scoreline .label{font-size:.85rem;color:#AEB9DE;max-width:180px;line-height:1.3;}
+
+  /* ---------- generic section header ---------- */
+  .sec-head{margin-bottom:2.6rem;}
+  .sec-head h2{font-size:clamp(1.7rem,3vw,2.5rem);font-weight:600;color:var(--navy);margin:0 0 .6rem;letter-spacing:-.01em;}
+  .sec-head p{color:var(--muted);font-size:1.02rem;max-width:620px;margin:0;line-height:1.55;}
+
+  /* ---------- summary cards ---------- */
+  .callout{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:1.8rem 2rem;margin-bottom:2.4rem;
+    box-shadow:0 12px 32px -20px rgba(30,39,97,.25);
+    font-size:1.05rem;line-height:1.6;color:#2b3040;
+  }
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+  @media(max-width:820px){.grid4{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.grid4{grid-template-columns:1fr;}}
+  .stat-card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:1.5rem 1.2rem;text-align:center;
+  }
+  .stat-card .num{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:600;color:var(--coral);line-height:1;}
+  .stat-card .num.pos{color:var(--green);}
+  .stat-card .num.warn{color:var(--amber);}
+  .stat-card p{margin:.6rem 0 0;font-size:.86rem;color:var(--muted);line-height:1.35;}
+
+  /* ---------- strengths ---------- */
+  .checklist{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem 2.2rem;}
+  @media(max-width:700px){.checklist{grid-template-columns:1fr;}}
+  .check-item{display:flex;gap:1rem;align-items:flex-start;}
+  .check-mark{
+    flex:none;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;
+  }
+  .check-item h4{margin:.1rem 0 .3rem;font-size:1rem;color:var(--navy);}
+  .check-item p{margin:0;font-size:.92rem;color:var(--muted);line-height:1.5;}
+
+  /* ---------- falencias filter + cards ---------- */
+  .filters{display:flex;gap:.6rem;margin-bottom:1.8rem;flex-wrap:wrap;}
+  .filter-btn{
+    border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:600;font-size:.8rem;
+    padding:.5rem 1rem;border-radius:100px;cursor:pointer;transition:all .18s;
+  }
+  .filter-btn:hover{border-color:var(--navy);}
+  .filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+  .issue{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:1.4rem 1.6rem;margin-bottom:.9rem;
+    display:grid;grid-template-columns:44px 1fr auto;gap:1.1rem;align-items:start;
+    transition:box-shadow .2s, transform .2s;
+  }
+  .issue:hover{box-shadow:0 14px 30px -22px rgba(30,39,97,.35);transform:translateY(-1px);}
+  .issue .idx{
+    width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;
+  }
+  .issue h4{margin:0 0 .4rem;font-size:1.02rem;color:var(--navy);}
+  .issue p{margin:0;font-size:.92rem;color:var(--muted);line-height:1.55;}
+  .sev{
+    align-self:center;font-size:.68rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    padding:.32rem .7rem;border-radius:100px;color:#fff;white-space:nowrap;
+  }
+  .sev.critica{background:#B3001B;}
+  .sev.alta{background:var(--coral);}
+  .sev.media{background:var(--amber);}
+  .sev.baja{background:var(--grey);}
+  .issue[data-sev]{display:none;}
+  .issue.show{display:grid;}
+
+  /* ---------- plan eixos ---------- */
+  .plan-band{background:var(--navy-deep);color:#fff;border-radius:24px;padding:3rem 2.2rem;}
+  .plan-band .sec-head h2{color:#fff;}
+  .plan-band .sec-head p{color:#AEB9DE;}
+  .plan-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+  @media(max-width:980px){.plan-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.plan-grid{grid-template-columns:1fr;}}
+  .plan-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:1.4rem 1.1rem;}
+  .plan-letter{
+    width:38px;height:38px;border-radius:50%;background:var(--coral);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;margin-bottom:.9rem;
+  }
+  .plan-card h4{margin:0 0 .5rem;font-size:.95rem;}
+  .plan-card p{margin:0;font-size:.82rem;color:#C7D0EE;line-height:1.5;}
+
+  /* ---------- guion phases ---------- */
+  .phase-track{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.4rem;}
+  @media(max-width:900px){.phase-track{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.phase-track{grid-template-columns:1fr;}}
+  .phase{
+    border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card);
+    cursor:pointer;transition:transform .2s;
+  }
+  .phase:hover{transform:translateY(-3px);}
+  .phase-top{padding:1rem 1.2rem;color:#fff;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;}
+  .phase-body{padding:1.2rem;}
+  .phase-body h4{margin:0 0 .5rem;color:var(--navy);font-size:1.05rem;}
+  .phase-time{
+    display:inline-block;font-size:.72rem;font-weight:700;color:var(--navy);
+    border:1px solid var(--line);padding:.2rem .6rem;border-radius:100px;margin-bottom:.7rem;
+  }
+  .phase-body p{margin:0;font-size:.86rem;color:var(--muted);line-height:1.5;}
+
+  .phase-detail{
+    display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:1.6rem 1.8rem;margin-top:-.4rem;margin-bottom:2rem;
+  }
+  .phase-detail.open{display:block;}
+  .phase-detail h5{margin:0 0 .4rem;color:var(--navy);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;}
+  .phase-detail .quote{
+    font-style:italic;color:#2b3040;background:var(--paper);border-left:3px solid var(--coral);
+    padding:.7rem 1rem;margin:.4rem 0 1rem;font-size:.95rem;border-radius:0 8px 8px 0;
+  }
+  .phase-detail p{font-size:.9rem;color:var(--muted);line-height:1.55;margin:0 0 1rem;}
+
+  /* ---------- closing/vs/objections cycle2 ---------- */
+  .vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;}
+  @media(max-width:700px){.vs-grid{grid-template-columns:1fr;}}
+  .vs-card{border-radius:16px;padding:1.6rem 1.8rem;}
+  .vs-card.bad{background:#FCEBE7;}
+  .vs-card.good{background:#E5F0EE;}
+  .vs-tag{font-weight:800;font-size:.78rem;letter-spacing:.05em;margin-bottom:.7rem;display:block;}
+  .vs-card.bad .vs-tag{color:var(--coral);}
+  .vs-card.good .vs-tag{color:var(--green);}
+  .vs-card .quote{font-style:italic;font-size:1.02rem;color:var(--ink);margin-bottom:.6rem;}
+  .vs-card p.note{font-size:.85rem;color:var(--muted);margin:0;line-height:1.5;}
+
+  /* ---------- score table (interactive) ---------- */
+  .score-wrap{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.8rem 2rem 2.2rem;}
+  .score-row{padding:1rem 0;border-bottom:1px solid var(--line);}
+  .score-row:last-child{border-bottom:none;}
+  .score-row .label-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.55rem;flex-wrap:wrap;gap:.4rem;}
+  .score-row .label-row strong{font-size:.95rem;color:var(--navy);}
+  .score-row .delta{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;color:var(--green);background:#E5F0EE;padding:.15rem .55rem;border-radius:100px;}
+  .bars{display:flex;flex-direction:column;gap:.4rem;}
+  .bar-line{display:flex;align-items:center;gap:.6rem;}
+  .bar-line .tag{width:64px;flex:none;font-size:.72rem;font-weight:700;color:var(--muted);}
+  .bar-track{flex:1;height:9px;background:var(--paper);border-radius:100px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:100px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1);}
+  .bar-fill.s1{background:var(--grey);}
+  .bar-fill.s2{background:var(--coral);}
+  .bar-line .val{width:24px;flex:none;text-align:right;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink);font-weight:600;}
+  .score-total{
+    margin-top:1.6rem;padding-top:1.4rem;border-top:2px solid var(--navy);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+  }
+  .score-total .t-label{font-family:'Fraunces',serif;font-weight:600;color:var(--navy);font-size:1.1rem;}
+  .score-total .t-nums{display:flex;align-items:baseline;gap:.8rem;}
+  .score-total .t-nums .n1{font-size:1.6rem;color:var(--grey);font-family:'Fraunces',serif;}
+  .score-total .t-nums .arrow2{color:var(--muted);}
+  .score-total .t-nums .n2{font-size:2.2rem;color:var(--coral);font-family:'Fraunces',serif;font-weight:700;}
+
+  /* ---------- next steps ---------- */
+  .steps-band{background:var(--navy-deep);color:#fff;border-radius:24px;padding:3.2rem 2.4rem;position:relative;overflow:hidden;}
+  .steps-band::after{content:'';position:absolute;left:-10%;bottom:-40%;width:340px;height:340px;border-radius:50%;background:var(--navy-2);opacity:.6;}
+  .steps-band .sec-head h2{color:#fff;}
+  .steps-band .sec-head p{color:#AEB9DE;}
+  .step-row{display:flex;gap:1.1rem;align-items:flex-start;margin-bottom:1.3rem;position:relative;z-index:1;}
+  .step-num{
+    flex:none;width:36px;height:36px;border-radius:50%;background:var(--coral);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;
+  }
+  .step-row p{margin:.2rem 0 0;color:#DCE3F7;font-size:.98rem;}
+  .steps-band .tagline{margin-top:1.6rem;font-style:italic;font-weight:600;color:#fff;position:relative;z-index:1;}
+
+  footer{padding:2.5rem 1.5rem 3.5rem;text-align:center;color:var(--muted);font-size:.82rem;}
+
+  .divider-tag{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);
+    background:var(--paper);border:1px solid var(--line);padding:.3rem .7rem;border-radius:100px;margin-bottom:1rem;
+  }
+
+  [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  [data-reveal].visible{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    [data-reveal]{opacity:1;transform:none;transition:none;}
+    .bar-fill{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">Crece Más · Formación</span>
+    <a class="nav-link" href="#resumen1">Ciclo 1</a>
+    <a class="nav-link" href="#falencias1">Falencias</a>
+    <a class="nav-link" href="#plan1">Plan</a>
+    <a class="nav-link" href="#guion">Guion</a>
+    <a class="nav-link" href="#ciclo2">Ciclo 2</a>
+    <a class="nav-link" href="#calificaciones">Calificaciones</a>
+    <a class="nav-link" href="#pasos">Próximos pasos</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Formación comercial · Sistema POS Crece Más</span>
+    <h1>De presentador de producto<br>a <em>comercial cerrador</em></h1>
+    <p class="lead">Análisis de dos ciclos de grabación de Arturo Pisango, con retroalimentación del auditor Octavio Sepúlveda, para convertir conocimiento de producto en cierres reales.</p>
+    <div class="hero-meta">
+      <span class="chip">Ciclo 1 · Demo autograbada</span>
+      <span class="chip">Ciclo 2 · Demo con prospecto Omar (Man House)</span>
+      <span class="chip">Auditoría de Octavio Sepúlveda</span>
+    </div>
+    <div class="scoreline">
+      <span class="big">1.9</span><span class="arrow">→</span><span class="big">4.6</span>
+      <span class="label">promedio general de evaluación, escala 0–7, entre semana 1 y semana 2</span>
+    </div>
+  </div>
+</header>
+
+<!-- ================= CICLO 1 : RESUMEN ================= -->
+<section id="resumen1" data-reveal>
+  <span class="divider-tag">01 · Ciclo 1</span>
+  <div class="sec-head">
+    <h2>Resumen ejecutivo</h2>
+    <p>Diagnóstico general de la primera demo grabada por Arturo, presentando el sistema en solitario.</p>
+  </div>
+  <div class="callout">
+    Arturo conoce el producto y no le teme a la cámara. Pero la demo tiene la estructura invertida: 90% <strong>"tour de funciones"</strong>, casi 0% diagnóstico, dolor, ROI y cierre. Es una demo feature-dump, no consultiva.
+  </div>
+  <div class="grid4">
+    <div class="stat-card"><div class="num">90%</div><p>del tiempo en tour de funciones, no en el dolor del cliente</p></div>
+    <div class="stat-card"><div class="num">0</div><p>preguntas de diagnóstico capturadas o usadas después</p></div>
+    <div class="stat-card"><div class="num">15+</div><p>muletillas "al respecto" y rellenos que restan autoridad</p></div>
+    <div class="stat-card"><div class="num">0</div><p>cierres o próximos pasos concretos solicitados al final</p></div>
+  </div>
+</section>
+
+<!-- FORTALEZAS -->
+<section data-reveal>
+  <div class="sec-head">
+    <h2>Punto de partida: lo que ya funciona</h2>
+    <p>Base sobre la cual construir, no reemplazar.</p>
+  </div>
+  <div class="checklist">
+    <div class="check-item"><div class="check-mark">✓</div><div><h4>Dominio de producto</h4><p>Conoce a profundidad cada módulo: roles, precios, inventario, caja. No hay lagunas de conocimiento técnico.</p></div></div>
+    <div class="check-item"><div class="check-mark">✓</div><div><h4>Comodidad frente a cámara</h4><p>Habla con fluidez y naturalidad, sin bloqueos ni lectura de guion evidente.</p></div></div>
+    <div class="check-item"><div class="check-mark">✓</div><div><h4>Intento de rapport inicial</h4><p>Abre con preguntas reflexivas de diagnóstico — la técnica correcta, aunque subutilizada después.</p></div></div>
+    <div class="check-item"><div class="check-mark">✓</div><div><h4>Tono cercano y humano</h4><p>Usa historias y ejemplos cotidianos que hacen la plataforma menos intimidante.</p></div></div>
+  </div>
+</section>
+
+<!-- FALENCIAS CICLO 1 -->
+<section id="falencias1" class="wide" data-reveal>
+  <span class="divider-tag">Hallazgos · Ciclo 1</span>
+  <div class="sec-head">
+    <h2>Análisis de falencias, punto por punto</h2>
+    <p>11 hallazgos de la primera demo. Filtra por severidad para priorizar.</p>
+  </div>
+  <div class="filters" data-filter-group="f1">
+    <button class="filter-btn active" data-filter="all">Todas (11)</button>
+    <button class="filter-btn" data-filter="critica">Crítica</button>
+    <button class="filter-btn" data-filter="alta">Alta</button>
+    <button class="filter-btn" data-filter="media">Media</button>
+    <button class="filter-btn" data-filter="baja">Baja</button>
+  </div>
+  <div data-list="f1">
+    <div class="issue show" data-sev="alta"><div class="idx">1</div><div><h4>El descubrimiento se hace pero no se usa</h4><p>Hace 4 buenas preguntas de diagnóstico (inventario, caja diaria, gestión, stock) pero nunca captura la respuesta ni la usa después. Dispara a ciegas el resto de la demo.</p></div><span class="sev alta">Alta</span></div>
+    <div class="issue show" data-sev="alta"><div class="idx">2</div><div><h4>No conecta features con el dolor del cliente</h4><p>El recorrido se presenta como tutorial genérico. Nunca vuelve a las preguntas iniciales para decir "¿recuerdas que no sabías X? Mira cómo esto lo resuelve".</p></div><span class="sev alta">Alta</span></div>
+    <div class="issue show" data-sev="media"><div class="idx">3</div><div><h4>Autosabotaje verbal constante</h4><p>Frases como "creo que no creo", "disculpa, estaba pensando en plantillas", correcciones de cifras en vivo. Cada una rompe autoridad y credibilidad.</p></div><span class="sev media">Media</span></div>
+    <div class="issue show" data-sev="media"><div class="idx">4</div><div><h4>Muletilla "al respecto" y relleno excesivo</h4><p>Repetida 15+ veces. Es un tic que resta pulcritud y distrae al oyente del contenido real.</p></div><span class="sev media">Media</span></div>
+    <div class="issue show" data-sev="baja"><div class="idx">5</div><div><h4>Roleplay del "supervisor regañón" sin propósito</h4><p>El recurso narrativo del vendedor tardón no conecta con ningún beneficio de negocio. Es ruido sin cierre, no ilustración de valor.</p></div><span class="sev baja">Baja</span></div>
+    <div class="issue show" data-sev="alta"><div class="idx">6</div><div><h4>Errores de datos y ejecución en vivo</h4><p>Cifras que cambian sobre la marcha (metas, stock, precios), clics equivocados. Sin dataset guionado, cada error resta seriedad al software mismo.</p></div><span class="sev alta">Alta</span></div>
+    <div class="issue show" data-sev="critica"><div class="idx">7</div><div><h4>No hay manejo de objeciones ni cierre</h4><p>Termina con "¿alguna duda? me imagino que no" — pregunta cerrada y débil que invita al "no, gracias, lo pienso". Cero siguiente paso solicitado.</p></div><span class="sev critica">Crítica</span></div>
+    <div class="issue show" data-sev="alta"><div class="idx">8</div><div><h4>Explica "cómo funciona" en vez de "qué ganas"</h4><p>Detalla campos técnicos (código EAN, tara en kg) sin traducirlos a beneficio de negocio. Incluso admite que algunos no aplican al prospecto.</p></div><span class="sev alta">Alta</span></div>
+    <div class="issue show" data-sev="baja"><div class="idx">9</div><div><h4>Tono inconsistente: cómplice vs. técnico</h4><p>Pasa de coloquial y bromista a explicación técnica densa sin transición. Falta un hilo conductor narrativo constante.</p></div><span class="sev baja">Baja</span></div>
+    <div class="issue show" data-sev="media"><div class="idx">10</div><div><h4>Sin urgencia ni prueba social</h4><p>No menciona casos de éxito, clientes actuales, ni genera FOMO — ni siquiera con el propio ejemplo del queso que él mismo narró.</p></div><span class="sev media">Media</span></div>
+    <div class="issue show" data-sev="media"><div class="idx">11</div><div><h4>Demo demasiado larga, sin priorización</h4><p>+45 min cubriendo casi todos los módulos sin verificar interés parcial. Un cerrador lee señales y salta lo irrelevante.</p></div><span class="sev media">Media</span></div>
+  </div>
+</section>
+
+<!-- PLAN DE MEJORA CICLO 1 -->
+<section id="plan1" data-reveal>
+  <div class="plan-band">
+    <div class="sec-head">
+      <h2>Plan de mejora</h2>
+      <p>Cinco ejes de formación para convertir a Arturo en comercial cerrador.</p>
+    </div>
+    <div class="plan-grid">
+      <div class="plan-card"><div class="plan-letter">A</div><h4>Estructura de la demo</h4><p>Diagnóstico → Conexión → Demostración dirigida → Cierre</p></div>
+      <div class="plan-card"><div class="plan-letter">B</div><h4>Guion y disciplina verbal</h4><p>Eliminar muletillas; dataset fijo; corregir en silencio</p></div>
+      <div class="plan-card"><div class="plan-letter">C</div><h4>Venta consultiva</h4><p>Feature → beneficio → resultado de negocio + objeciones</p></div>
+      <div class="plan-card"><div class="plan-letter">D</div><h4>Cierre y siguiente paso</h4><p>Prohibido terminar en pregunta débil; siempre acción acordada</p></div>
+      <div class="plan-card"><div class="plan-letter">E</div><h4>Práctica y feedback</h4><p>Grabaciones + roleplay semanal con objeciones reales</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GUION ESTRUCTURADO -->
+<section id="guion" class="wide" data-reveal>
+  <span class="divider-tag">Propuesta</span>
+  <div class="sec-head">
+    <h2>Guion estructurado de demo</h2>
+    <p>Modelo de 4 fases — reemplaza el "tour de producto" por una demo consultiva. Toca cada fase para ver el detalle.</p>
+  </div>
+  <div class="phase-track">
+    <div class="phase" data-phase="p1">
+      <div class="phase-top" style="background:var(--navy);">01</div>
+      <div class="phase-body"><span class="phase-time">2–3 min</span><h4>Apertura y diagnóstico</h4><p>Rapport + preguntas de descubrimiento, exigiendo y anotando la respuesta real del cliente.</p></div>
+    </div>
+    <div class="phase" data-phase="p2">
+      <div class="phase-top" style="background:var(--navy-2);">02</div>
+      <div class="phase-body"><span class="phase-time">1–2 min</span><h4>Conexión del dolor</h4><p>Resumir el dolor detectado con las propias palabras del cliente antes de mostrar nada.</p></div>
+    </div>
+    <div class="phase" data-phase="p3">
+      <div class="phase-top" style="background:var(--green);">03</div>
+      <div class="phase-body"><span class="phase-time">15–20 min</span><h4>Demostración dirigida</h4><p>Mostrar solo los módulos que resuelven ese dolor. Fórmula: feature → beneficio → resultado.</p></div>
+    </div>
+    <div class="phase" data-phase="p4">
+      <div class="phase-top" style="background:var(--coral);">04</div>
+      <div class="phase-body"><span class="phase-time">3–5 min</span><h4>Cierre y compromiso</h4><p>Resumen de valor + pregunta de cierre concreta + siguiente paso agendado con fecha.</p></div>
+    </div>
+  </div>
+
+  <div class="phase-detail" id="detail-p1">
+    <h5>Rapport (30 seg)</h5>
+    <p class="quote">"Gracias por tu tiempo, sé que tienes la agenda llena — voy a ir directo a lo que te sirve."</p>
+    <h5>Preguntas de diagnóstico (obligatorio anotar respuesta)</h5>
+    <p>¿Cómo controlas hoy tu inventario? · ¿Sabes cuánto ingresa cada día, en tiempo real? · ¿Sabes qué vendedor hizo cada venta? · ¿Alguna vez perdiste una venta por falta de stock?</p>
+    <h5>Regla de oro</h5>
+    <p>Esperar la respuesta en voz alta. No avanzar sin ella.</p>
+  </div>
+
+  <div class="phase-detail" id="detail-p2">
+    <h5>Frase puente</h5>
+    <p class="quote">"Entonces, si te escuché bien: hoy no sabes cuánto ingresa al día ni qué producto se agota, ¿correcto?"</p>
+    <h5>Por qué funciona</h5>
+    <p>Usa las propias palabras del cliente (técnica de espejo/PNL). Genera acuerdo antes de vender, y da permiso para mostrar la solución como respuesta directa, no como catálogo.</p>
+    <h5>Transición al demo</h5>
+    <p class="quote">"Perfecto. Te voy a mostrar exactamente cómo esto se resuelve, sin vueltas."</p>
+  </div>
+
+  <div class="phase-detail" id="detail-p3">
+    <h5>La fórmula</h5>
+    <p><strong>Feature</strong> → "Mira esta alerta de stock mínimo" &nbsp;·&nbsp; <strong>Beneficio</strong> → "Te avisa antes de quedarte sin producto" &nbsp;·&nbsp; <strong>Resultado</strong> → "Nunca más pierdes una venta como la del queso"</p>
+    <h5>Reglas de ejecución</h5>
+    <p>1. Mostrar solo los módulos que resuelven el dolor detectado — saltar el resto.<br>2. Dataset fijo y ensayado — cero improvisación de cifras.<br>3. Si hay un error en vivo, corregir en silencio y seguir.<br>4. Cada 2–3 min, pausa de chequeo: "¿esto te sirve para lo que me contaste?"</p>
+  </div>
+
+  <div class="phase-detail" id="detail-p4">
+    <h5>Evitar</h5>
+    <p class="quote">"¿Alguna duda? Me imagino que no…"</p>
+    <h5>Usar</h5>
+    <p class="quote">"Con lo que viste hoy, ¿qué necesitarías para arrancar esta semana?"</p>
+    <h5>Checklist de cierre obligatorio</h5>
+    <p>Resumir el valor mostrado ligado al dolor inicial · mencionar 1 caso de éxito · pregunta de cierre orientada a la acción · manejar la objeción inmediata · acordar fecha y hora concretas · confirmar el compromiso en voz alta.</p>
+  </div>
+</section>
+
+<!-- ================= CICLO 2 ================= -->
+<section id="ciclo2" data-reveal>
+  <span class="divider-tag">02 · Ciclo 2</span>
+  <div class="sec-head">
+    <h2>Segundo ciclo de evaluación</h2>
+    <p>Demo con Omar (Man House) + retroalimentación del auditor Octavio Sepúlveda.</p>
+  </div>
+  <div class="callout">
+    Arturo incorporó el modelo de diagnóstico → conexión → demo → cierre. Ahora pregunta, espera respuesta, resume el dolor con las palabras del cliente y cierra con una pregunta de acción. Pasó de "presentador de producto" a alguien que suena como vendedor consultivo. Pero el auditor detecta que la ejecución aún es irregular: hilos que no se cierran, imprecisiones técnicas y objeciones que se aceptan sin manejar.
+  </div>
+  <div class="grid4">
+    <div class="stat-card"><div class="num pos">✓</div><p>Diagnóstico con captura real de respuestas</p></div>
+    <div class="stat-card"><div class="num pos">✓</div><p>Cierre con pregunta de acción concreta</p></div>
+    <div class="stat-card"><div class="num warn">△</div><p>Conexión dolor–feature se abre pero no se cierra</p></div>
+    <div class="stat-card"><div class="num">✗</div><p>Objeciones aceptadas sin manejar (precio, socio)</p></div>
+  </div>
+</section>
+
+<!-- FALENCIAS CICLO 2 -->
+<section class="wide" data-reveal>
+  <div class="sec-head">
+    <h2>Análisis de falencias — Demo 2</h2>
+    <p>6 hallazgos, incorporando directamente los comentarios del auditor.</p>
+  </div>
+  <div class="filters" data-filter-group="f2">
+    <button class="filter-btn active" data-filter="all">Todas (6)</button>
+    <button class="filter-btn" data-filter="critica">Crítica</button>
+    <button class="filter-btn" data-filter="alta">Alta</button>
+    <button class="filter-btn" data-filter="media">Media</button>
+    <button class="filter-btn" data-filter="baja">Baja</button>
+  </div>
+  <div data-list="f2">
+    <div class="issue show" data-sev="critica"><div class="idx">1</div><div><h4>El dolor se abre pero no se cierra antes de saltar de tema</h4><p>El auditor señala (min 16:46) que conecta bien "falta de control de vendedores" con la apertura de caja, pero salta a "lista de productos maestra" sin cerrar la idea. Se retoma en el min 18:30 pero tampoco queda concluida.</p></div><span class="sev critica">Crítica</span></div>
+    <div class="issue show" data-sev="alta"><div class="idx">2</div><div><h4>Imprecisión técnica en explicaciones clave</h4><p>El umbral de stock se explica como aviso de "ya no hay stock" cuando en realidad avisa "te queda poco" (previene el quiebre). También omitió explicar que el precio final de una promo de grupo debe editarse manualmente para que el descuento aplique.</p></div><span class="sev alta">Alta</span></div>
+    <div class="issue show" data-sev="media"><div class="idx">3</div><div><h4>No verifica permisos por rol en el momento</h4><p>El auditor pide investigar si una acción atribuida al cliente también la puede ejecutar el vendedor — Arturo no tenía la respuesta clara. Vacío de conocimiento de producto en un caso específico.</p></div><span class="sev media">Media</span></div>
+    <div class="issue show" data-sev="baja"><div class="idx">4</div><div><h4>No usa el truco de búsqueda rápida por código de barras</h4><p>El auditor sugiere copiar el código de barras y pegarlo directo en el buscador + enter, sin que el cliente note que no es búsqueda por nombre — un tip de agilidad no aprovechado que refuerza el argumento de "rapidez".</p></div><span class="sev baja">Baja</span></div>
+    <div class="issue show" data-sev="critica"><div class="idx">5</div><div><h4>Objeciones aceptadas sin manejar</h4><p>Ante "tengo que hablar con mi socio" y "hay que ver precios", Arturo aplaza en vez de neutralizar: no ofrece incluir al socio en una llamada, y dice "aún no vamos a ver precios" sin anclar valor antes de aplazar. Cierre sin fecha ni compromiso firme.</p></div><span class="sev critica">Crítica</span></div>
+    <div class="issue show" data-sev="media"><div class="idx">6</div><div><h4>Persisten tropiezos de ejecución en vivo</h4><p>Contraseña incorrecta al cerrar caja, confusión entre cifras de cierre, "mira qué penoso, ¿no?" ante un fallo. El dataset de demo sigue sin estar completamente guionado.</p></div><span class="sev media">Media</span></div>
+  </div>
+
+  <div class="vs-grid" style="margin-top:2.4rem;">
+    <div class="vs-card bad">
+      <span class="vs-tag">✗ EVITAR</span>
+      <p class="quote">"¿Alguna duda? Me imagino que no…"</p>
+      <p class="note">Pregunta cerrada y débil que invita al "no, gracias, lo pienso". No genera ninguna acción.</p>
+    </div>
+    <div class="vs-card good">
+      <span class="vs-tag">✓ USAR</span>
+      <p class="quote">"Con lo que viste hoy, ¿qué necesitarías para arrancar esta semana?"</p>
+      <p class="note">Pregunta abierta orientada a la acción. Obliga a definir el siguiente paso concreto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CALIFICACIONES -->
+<section id="calificaciones" data-reveal>
+  <span class="divider-tag">Medición</span>
+  <div class="sec-head">
+    <h2>Tabla de calificaciones</h2>
+    <p>Escala de 0 a 7 — comparación Semana 1 (demo autograbada) vs. Semana 2 (demo con Omar). Las barras se animan al hacer scroll.</p>
+  </div>
+  <div class="score-wrap" id="score-wrap">
+    <!-- rows injected structurally in HTML for accessibility, values via data attrs -->
+    <div class="score-row" data-s1="2" data-s2="6">
+      <div class="label-row"><strong>Diagnóstico y descubrimiento</strong><span class="delta">+4</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">2</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">6</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="1" data-s2="5">
+      <div class="label-row"><strong>Conexión dolor → feature</strong><span class="delta">+4</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">1</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">5</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="3" data-s2="4">
+      <div class="label-row"><strong>Precisión técnica del producto</strong><span class="delta">+1</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="0" data-s2="3">
+      <div class="label-row"><strong>Manejo de objeciones</strong><span class="delta">+3</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">0</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">3</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="1" data-s2="4">
+      <div class="label-row"><strong>Cierre y siguiente paso</strong><span class="delta">+3</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">1</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="3" data-s2="4">
+      <div class="label-row"><strong>Disciplina verbal / ejecución en vivo</strong><span class="delta">+1</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="3" data-s2="6">
+      <div class="label-row"><strong>Rapport y personalización</strong><span class="delta">+3</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">6</span></div>
+      </div>
+    </div>
+
+    <div class="score-total">
+      <span class="t-label">Promedio general</span>
+      <div class="t-nums"><span class="n1">1.9</span><span class="arrow2">→</span><span class="n2">4.6</span></div>
+    </div>
+  </div>
+  <p style="font-size:.85rem;color:var(--muted);font-style:italic;margin-top:1.2rem;">
+    Lectura: el mayor salto está en diagnóstico y conexión con el dolor (base del modelo de 4 fases). El manejo de objeciones y el cierre mejoraron, pero siguen siendo el techo de mejora más próximo.
+  </p>
+</section>
+
+<!-- PLAN AJUSTADO -->
+<section data-reveal>
+  <div class="plan-band">
+    <div class="sec-head">
+      <h2>Plan de mejora ajustado</h2>
+      <p>Siguiente ciclo: de "vendedor consultivo" a "cerrador".</p>
+    </div>
+    <div class="plan-grid">
+      <div class="plan-card"><div class="plan-letter">A</div><h4>Cerrar cada hilo</h4><p>Frase de cierre corta antes de cambiar de módulo: "con esto resolvimos X, vamos a Y y volvemos a Z"</p></div>
+      <div class="plan-card"><div class="plan-letter">B</div><h4>Blindar precisión técnica</h4><p>Checklist de 5–6 conceptos ambiguos antes de cada demo</p></div>
+      <div class="plan-card"><div class="plan-letter">C</div><h4>Guion de objeciones</h4><p>Respuesta lista para "hablar con mi socio" y "ver precios" — nunca aplazar sin ofrecer una acción</p></div>
+      <div class="plan-card"><div class="plan-letter">D</div><h4>Usar ganchos emocionales</h4><p>Conectar lo personal (ej. voluntariado) de vuelta con el argumento de negocio al cerrar</p></div>
+      <div class="plan-card"><div class="plan-letter">E</div><h4>Ensayar el dataset de demo</h4><p>Repetir el flujo apertura–venta–cierre de caja hasta que salga sin errores</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓXIMOS PASOS -->
+<section id="pasos" data-reveal>
+  <div class="steps-band">
+    <div class="sec-head">
+      <h2>Próximos pasos</h2>
+      <p>Objetivo: de vendedor consultivo a comercial cerrador.</p>
+    </div>
+    <div class="step-row"><div class="step-num">1</div><p>Compartir esta comparación de calificaciones con Arturo como retroalimentación objetiva.</p></div>
+    <div class="step-row"><div class="step-num">2</div><p>Aplicar el guion de manejo de objeciones antes de la próxima reunión con prospecto.</p></div>
+    <div class="step-row"><div class="step-num">3</div><p>Grabar Demo 3 enfocada en cerrar cada hilo y neutralizar objeciones.</p></div>
+    <div class="step-row"><div class="step-num">4</div><p>Repetir la tabla de calificación en la Demo 3 para medir la siguiente variación.</p></div>
+  </div>
+</section>
+
+<footer>Formación Comercial — Análisis de Demo POS · Crece Más (Facele)</footer>
+
+<script>
+  // scroll progress bar
+  const progress = document.getElementById('progress');
+  function updateProgress(){
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = scrolled + '%';
+  }
+  document.addEventListener('scroll', updateProgress);
+  updateProgress();
+
+  // active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-link');
+  function setActive(){
+    let current = '';
+    sections.forEach(sec=>{
+      const rect = sec.getBoundingClientRect();
+      if(rect.top <= 120 && rect.bottom > 120) current = sec.id;
+    });
+    links.forEach(l=>{
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  }
+  document.addEventListener('scroll', setActive);
+  setActive();
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el=>io.observe(el));
+
+  // filters (falencias)
+  document.querySelectorAll('.filters').forEach(group=>{
+    const groupKey = group.dataset.filterGroup;
+    const list = document.querySelector('[data-list="'+groupKey+'"]');
+    group.querySelectorAll('.filter-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        group.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        list.querySelectorAll('.issue').forEach(issue=>{
+          const match = (f === 'all') || (issue.dataset.sev === f);
+          issue.classList.toggle('show', match);
+        });
+      });
+    });
+  });
+
+  // phase detail toggle
+  const phaseDetails = { p1:'detail-p1', p2:'detail-p2', p3:'detail-p3', p4:'detail-p4' };
+  let openPhase = null;
+  document.querySelectorAll('.phase').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const key = card.dataset.phase;
+      const el = document.getElementById(phaseDetails[key]);
+      const wasOpen = el.classList.contains('open');
+      document.querySelectorAll('.phase-detail').forEach(d=>d.classList.remove('open'));
+      if(!wasOpen){
+        el.classList.add('open');
+        el.scrollIntoView({behavior:'smooth', block:'nearest'});
+      }
+    });
+  });
+  // open phase 1 by default
+  document.getElementById('detail-p1').classList.add('open');
+
+  // animated score bars on scroll into view
+  const scoreWrap = document.getElementById('score-wrap');
+  const scoreIO = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        document.querySelectorAll('.score-row').forEach(row=>{
+          const s1 = parseFloat(row.dataset.s1);
+          const s2 = parseFloat(row.dataset.s2);
+          const fills = row.querySelectorAll('.bar-fill');
+          fills[0].style.width = (s1/7*100) + '%';
+          fills[1].style.width = (s2/7*100) + '%';
+        });
+        scoreIO.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+  if(scoreWrap) scoreIO.observe(scoreWrap);
+</script>
+
+</body>
+</html>
