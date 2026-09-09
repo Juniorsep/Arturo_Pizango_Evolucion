@@ -240,7 +240,9 @@
   .bar-track{flex:1;height:9px;background:var(--paper);border-radius:100px;overflow:hidden;}
   .bar-fill{height:100%;border-radius:100px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1);}
   .bar-fill.s1{background:var(--grey);}
-  .bar-fill.s2{background:var(--coral);}
+  .bar-fill.s2{background:var(--navy-2);}
+  .bar-fill.s3{background:var(--coral);}
+  .delta.neg{color:var(--coral);background:#FCEBE7;}
   .bar-line .val{width:24px;flex:none;text-align:right;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink);font-weight:600;}
   .score-total{
     margin-top:1.6rem;padding-top:1.4rem;border-top:2px solid var(--navy);
@@ -249,6 +251,7 @@
   .score-total .t-label{font-family:'Fraunces',serif;font-weight:600;color:var(--navy);font-size:1.1rem;}
   .score-total .t-nums{display:flex;align-items:baseline;gap:.8rem;}
   .score-total .t-nums .n1{font-size:1.6rem;color:var(--grey);font-family:'Fraunces',serif;}
+  .score-total .t-nums .n2.mid{font-size:1.8rem;color:var(--navy-2);}
   .score-total .t-nums .arrow2{color:var(--muted);}
   .score-total .t-nums .n2{font-size:2.2rem;color:var(--coral);font-family:'Fraunces',serif;font-weight:700;}
 
@@ -294,6 +297,7 @@
     <a class="nav-link" href="#plan1">Plan</a>
     <a class="nav-link" href="#guion">Guion</a>
     <a class="nav-link" href="#ciclo2">Ciclo 2</a>
+    <a class="nav-link" href="#ciclo3">Ciclo 3</a>
     <a class="nav-link" href="#calificaciones">Calificaciones</a>
     <a class="nav-link" href="#pasos">Próximos pasos</a>
   </div>
@@ -308,11 +312,12 @@
     <div class="hero-meta">
       <span class="chip">Ciclo 1 · Demo autograbada</span>
       <span class="chip">Ciclo 2 · Demo con prospecto Omar (Man House)</span>
+      <span class="chip">Ciclo 3 · Demo con prospecta Sandra (Matmax)</span>
       <span class="chip">Auditoría de Octavio Sepúlveda</span>
     </div>
     <div class="scoreline">
-      <span class="big">1.9</span><span class="arrow">→</span><span class="big">4.6</span>
-      <span class="label">promedio general de evaluación, escala 0–7, entre semana 1 y semana 2</span>
+      <span class="big">1.9</span><span class="arrow">→</span><span class="big">4.6</span><span class="arrow">→</span><span class="big">5.3</span>
+      <span class="label">promedio general de evaluación, escala 0–7, semana 1 a semana 3 — salto real en dominio de producto, diagnóstico y rapport</span>
     </div>
   </div>
 </header>
@@ -510,75 +515,6 @@
   </div>
 </section>
 
-<!-- CALIFICACIONES -->
-<section id="calificaciones" data-reveal>
-  <span class="divider-tag">Medición</span>
-  <div class="sec-head">
-    <h2>Tabla de calificaciones</h2>
-    <p>Escala de 0 a 7 — comparación Semana 1 (demo autograbada) vs. Semana 2 (demo con Omar). Las barras se animan al hacer scroll.</p>
-  </div>
-  <div class="score-wrap" id="score-wrap">
-    <!-- rows injected structurally in HTML for accessibility, values via data attrs -->
-    <div class="score-row" data-s1="2" data-s2="6">
-      <div class="label-row"><strong>Diagnóstico y descubrimiento</strong><span class="delta">+4</span></div>
-      <div class="bars">
-        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">2</span></div>
-        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">6</span></div>
-      </div>
-    </div>
-    <div class="score-row" data-s1="1" data-s2="5">
-      <div class="label-row"><strong>Conexión dolor → feature</strong><span class="delta">+4</span></div>
-      <div class="bars">
-        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">1</span></div>
-        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">5</span></div>
-      </div>
-    </div>
-    <div class="score-row" data-s1="3" data-s2="4">
-      <div class="label-row"><strong>Precisión técnica del producto</strong><span class="delta">+1</span></div>
-      <div class="bars">
-        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
-        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
-      </div>
-    </div>
-    <div class="score-row" data-s1="0" data-s2="3">
-      <div class="label-row"><strong>Manejo de objeciones</strong><span class="delta">+3</span></div>
-      <div class="bars">
-        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">0</span></div>
-        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">3</span></div>
-      </div>
-    </div>
-    <div class="score-row" data-s1="1" data-s2="4">
-      <div class="label-row"><strong>Cierre y siguiente paso</strong><span class="delta">+3</span></div>
-      <div class="bars">
-        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">1</span></div>
-        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
-      </div>
-    </div>
-    <div class="score-row" data-s1="3" data-s2="4">
-      <div class="label-row"><strong>Disciplina verbal / ejecución en vivo</strong><span class="delta">+1</span></div>
-      <div class="bars">
-        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
-        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
-      </div>
-    </div>
-    <div class="score-row" data-s1="3" data-s2="6">
-      <div class="label-row"><strong>Rapport y personalización</strong><span class="delta">+3</span></div>
-      <div class="bars">
-        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
-        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">6</span></div>
-      </div>
-    </div>
-
-    <div class="score-total">
-      <span class="t-label">Promedio general</span>
-      <div class="t-nums"><span class="n1">1.9</span><span class="arrow2">→</span><span class="n2">4.6</span></div>
-    </div>
-  </div>
-  <p style="font-size:.85rem;color:var(--muted);font-style:italic;margin-top:1.2rem;">
-    Lectura: el mayor salto está en diagnóstico y conexión con el dolor (base del modelo de 4 fases). El manejo de objeciones y el cierre mejoraron, pero siguen siendo el techo de mejora más próximo.
-  </p>
-</section>
-
 <!-- PLAN AJUSTADO -->
 <section data-reveal>
   <div class="plan-band">
@@ -596,17 +532,152 @@
   </div>
 </section>
 
+<!-- ================= CICLO 3 ================= -->
+<section id="ciclo3" data-reveal>
+  <span class="divider-tag">03 · Ciclo 3</span>
+  <div class="sec-head">
+    <h2>Tercer ciclo de evaluación</h2>
+    <p>Demo con Sandra (Matmax, cadena de zapatillas deportivas) + retroalimentación del auditor Octavio Sepúlveda.</p>
+  </div>
+  <div class="callout">
+    Arturo entra directo al dolor del cliente desde el segundo 8 — el auditor lo marca como <strong>"excelente entrada"</strong>. El dominio de producto ya es sólido: adapta el mensaje a Matmax, resume bien la información y retoma el sondeo inicial para reformular y cerrar la demo de manera óptima. El rapport también da un salto — se nota una mejora sustancial en cómo personaliza la conversación. Además, ya no usa las muletillas de relleno de ciclos anteriores ("al respecto"). El punto a corregir no es de producto ni de venta: reveló la contraseña del supervisor en pantalla compartida por no tener presente la política de seguridad de la información — un vacío de formación puntual, no un error de conocimiento técnico. También sobre-adorna el discurso con frases redundantes y el ritmo de habla es lento (128 ppm vs. 160–180 recomendado).
+  </div>
+  <div class="grid4">
+    <div class="stat-card"><div class="num pos">✓</div><p>Dominio de producto sólido, adapta el discurso a la necesidad del cliente</p></div>
+    <div class="stat-card"><div class="num pos">✓</div><p>Rapport y personalización: mejora sustancial</p></div>
+    <div class="stat-card"><div class="num warn">△</div><p>Ritmo de habla lento: 128 ppm vs. 160–180 recomendado</p></div>
+    <div class="stat-card"><div class="num">✗</div><p>Reveló una contraseña por no tener presente la política de seguridad</p></div>
+  </div>
+</section>
+
+<!-- FALENCIAS CICLO 3 -->
+<section class="wide" data-reveal>
+  <div class="sec-head">
+    <h2>Análisis de falencias — Demo 3</h2>
+    <p>7 hallazgos, incorporando directamente los comentarios del auditor.</p>
+  </div>
+  <div class="filters" data-filter-group="f3">
+    <button class="filter-btn active" data-filter="all">Todas (7)</button>
+    <button class="filter-btn" data-filter="critica">Crítica</button>
+    <button class="filter-btn" data-filter="alta">Alta</button>
+    <button class="filter-btn" data-filter="media">Media</button>
+    <button class="filter-btn" data-filter="baja">Baja</button>
+  </div>
+  <div data-list="f3">
+    <div class="issue show" data-sev="critica"><div class="idx">1</div><div><h4>Reveló una contraseña en pantalla compartida</h4><p>El auditor señala (min 33:20) que mencionó y mostró la contraseña del supervisor (12345678) mientras compartía pantalla completa con la clienta. No es un error de conocimiento del producto — es un vacío puntual: no tenía presente la política de seguridad de la información de la empresa. Aun así, es una violación que nunca debe pasar, sin importar que sea una demo.</p></div><span class="sev critica">Crítica</span></div>
+    <div class="issue show" data-sev="alta"><div class="idx">2</div><div><h4>Promesa de valor mal enfocada</h4><p>Dijo "no te va a pasar 5 veces, te va a pasar menos" — el auditor corrige: el foco no debe ser prometer que el error no ocurrirá, sino que la plataforma da control para detectarlo y resolverlo rápido sin depender de un proceso manual. Cambia la promesa de "cero errores" a "control total".</p></div><span class="sev alta">Alta</span></div>
+    <div class="issue show" data-sev="alta"><div class="idx">3</div><div><h4>Ritmo de comunicación lento</h4><p>128 palabras por minuto medidas por el auditor, cuando el rango recomendado es 160–180 ppm. Un ritmo lento resta energía y percepción de seguridad frente al cliente.</p></div><span class="sev alta">Alta</span></div>
+    <div class="issue show" data-sev="media"><div class="idx">4</div><div><h4>Sobre-pronunciación de palabras en inglés</h4><p>El auditor advierte (min 23:34) que sobre-pronunciar términos en inglés (ej. el nombre del plan) puede generar un efecto negativo en cierto tipo de audiencia — resta naturalidad al discurso.</p></div><span class="sev media">Media</span></div>
+    <div class="issue show" data-sev="media"><div class="idx">5</div><div><h4>Sobre-adorna el discurso con frases redundantes</h4><p>Ya no son las muletillas de relleno de ciclos anteriores — ese hábito está resuelto. El patrón nuevo es distinto: querer decorar de más las frases. El auditor marca (min 27:22) "según las compras que se vendan" como un ejemplo contradictorio en sí mismo — el adorno extra confunde en vez de aportar valor.</p></div><span class="sev media">Media</span></div>
+    <div class="issue show" data-sev="critica"><div class="idx">6</div><div><h4>Pregunta de cierre ambigua</h4><p>"¿Qué necesitamos para empezar hoy y no mañana?" — el auditor mismo indica (min 36:11) que no logró comprender la intención de la pregunta: quedó en el aire sin un objetivo claro para la clienta.</p></div><span class="sev critica">Crítica</span></div>
+    <div class="issue show" data-sev="alta"><div class="idx">7</div><div><h4>Objeción de precio sin argumento de comparación</h4><p>Ante "es caro", no sondeó cuánto pagaba Sandra con su plataforma anterior (Bsale) ni ancló el valor por usuario. El auditor sugiere: 7500 soles ÷ 51 usuarios = 147 soles al mes, ≈4 soles al día por usuario — un ancla mucho más fácil de justificar que el total.</p></div><span class="sev alta">Alta</span></div>
+  </div>
+</section>
+
+<!-- PLAN AJUSTADO CICLO 3 -->
+<section data-reveal>
+  <div class="plan-band">
+    <div class="sec-head">
+      <h2>Plan de mejora — Ciclo 3</h2>
+      <p>Salto real en dominio de producto y rapport; la seguridad de la información entra al radar de formación como prioridad no negociable.</p>
+    </div>
+    <div class="plan-grid">
+      <div class="plan-card"><div class="plan-letter">A</div><h4>Blindar seguridad de la información</h4><p>Nunca revelar contraseñas ni datos sensibles en pantalla compartida — protocolo de verificación antes de cada demo</p></div>
+      <div class="plan-card"><div class="plan-letter">B</div><h4>Reencuadrar la promesa de valor</h4><p>De "no te va a pasar" a "tienes control para detectarlo y resolverlo rápido" — promesa honesta y sostenible</p></div>
+      <div class="plan-card"><div class="plan-letter">C</div><h4>Subir el ritmo de habla</h4><p>Ejercicios de lectura cronometrada hasta llegar a 160–180 ppm, sin perder claridad</p></div>
+      <div class="plan-card"><div class="plan-letter">D</div><h4>Argumentario de objeción de precio</h4><p>Siempre sondear cuánto pagaba antes o anclar a valor por usuario/día antes de justificar el precio total</p></div>
+      <div class="plan-card"><div class="plan-letter">E</div><h4>Preguntas de cierre verificables</h4><p>Reemplazar preguntas ambiguas por una pregunta específica y accionable, con objetivo claro para el cliente</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CALIFICACIONES -->
+<section id="calificaciones" data-reveal>
+  <span class="divider-tag">Medición</span>
+  <div class="sec-head">
+    <h2>Tabla de calificaciones</h2>
+    <p>Escala de 0 a 7 — Semana 1 (demo autograbada), Semana 2 (demo con Omar) y Semana 3 (demo con Sandra). Las barras se animan al hacer scroll.</p>
+  </div>
+  <div class="score-wrap" id="score-wrap">
+    <!-- rows injected structurally in HTML for accessibility, values via data attrs -->
+    <div class="score-row" data-s1="2" data-s2="6" data-s3="7">
+      <div class="label-row"><strong>Diagnóstico y descubrimiento</strong><span class="delta">S2→S3: +1</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">2</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">6</span></div>
+        <div class="bar-line"><span class="tag">Semana 3</span><div class="bar-track"><div class="bar-fill s3"></div></div><span class="val">7</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="1" data-s2="5" data-s3="6">
+      <div class="label-row"><strong>Conexión dolor → feature</strong><span class="delta">S2→S3: +1</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">1</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">5</span></div>
+        <div class="bar-line"><span class="tag">Semana 3</span><div class="bar-track"><div class="bar-fill s3"></div></div><span class="val">6</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="3" data-s2="4" data-s3="6">
+      <div class="label-row"><strong>Precisión técnica del producto</strong><span class="delta">S2→S3: +2</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
+        <div class="bar-line"><span class="tag">Semana 3</span><div class="bar-track"><div class="bar-fill s3"></div></div><span class="val">6</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="0" data-s2="3" data-s3="3">
+      <div class="label-row"><strong>Manejo de objeciones</strong><span class="delta">S2→S3: 0</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">0</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">3</span></div>
+        <div class="bar-line"><span class="tag">Semana 3</span><div class="bar-track"><div class="bar-fill s3"></div></div><span class="val">3</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="1" data-s2="4" data-s3="4">
+      <div class="label-row"><strong>Cierre y siguiente paso</strong><span class="delta">S2→S3: 0</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">1</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
+        <div class="bar-line"><span class="tag">Semana 3</span><div class="bar-track"><div class="bar-fill s3"></div></div><span class="val">4</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="3" data-s2="4" data-s3="4">
+      <div class="label-row"><strong>Disciplina verbal / ejecución en vivo</strong><span class="delta">S2→S3: 0</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">4</span></div>
+        <div class="bar-line"><span class="tag">Semana 3</span><div class="bar-track"><div class="bar-fill s3"></div></div><span class="val">4</span></div>
+      </div>
+    </div>
+    <div class="score-row" data-s1="3" data-s2="6" data-s3="7">
+      <div class="label-row"><strong>Rapport y personalización</strong><span class="delta">S2→S3: +1</span></div>
+      <div class="bars">
+        <div class="bar-line"><span class="tag">Semana 1</span><div class="bar-track"><div class="bar-fill s1"></div></div><span class="val">3</span></div>
+        <div class="bar-line"><span class="tag">Semana 2</span><div class="bar-track"><div class="bar-fill s2"></div></div><span class="val">6</span></div>
+        <div class="bar-line"><span class="tag">Semana 3</span><div class="bar-track"><div class="bar-fill s3"></div></div><span class="val">7</span></div>
+      </div>
+    </div>
+
+    <div class="score-total">
+      <span class="t-label">Promedio general</span>
+      <div class="t-nums"><span class="n1">1.9</span><span class="arrow2">→</span><span class="n2 mid">4.6</span><span class="arrow2">→</span><span class="n2">5.3</span></div>
+    </div>
+  </div>
+  <p style="font-size:.85rem;color:var(--muted);font-style:italic;margin-top:1.2rem;">
+    Lectura: salto real de 4.6 a 5.3. El dominio de producto ya es sólido y se adapta a la necesidad del cliente, el sondeo inicial se retoma y reformula de manera óptima, y el rapport muestra una mejora sustancial. La alerta de seguridad de la información (contraseña revelada) no baja estos puntajes porque fue un desconocimiento puntual de política — no una falla de conocimiento técnico ni de venta — pero sigue siendo la corrección más urgente antes de la próxima demo. El techo real ahora es el manejo de objeciones de precio.
+  </p>
+</section>
+
 <!-- PRÓXIMOS PASOS -->
 <section id="pasos" data-reveal>
   <div class="steps-band">
     <div class="sec-head">
       <h2>Próximos pasos</h2>
-      <p>Objetivo: de vendedor consultivo a comercial cerrador.</p>
+      <p>Objetivo: blindar la ejecución antes de sumar un nuevo módulo de venta.</p>
     </div>
-    <div class="step-row"><div class="step-num">1</div><p>Compartir esta comparación de calificaciones con Arturo como retroalimentación objetiva.</p></div>
-    <div class="step-row"><div class="step-num">2</div><p>Aplicar el guion de manejo de objeciones antes de la próxima reunión con prospecto.</p></div>
-    <div class="step-row"><div class="step-num">3</div><p>Grabar Demo 3 enfocada en cerrar cada hilo y neutralizar objeciones.</p></div>
-    <div class="step-row"><div class="step-num">4</div><p>Repetir la tabla de calificación en la Demo 3 para medir la siguiente variación.</p></div>
+    <div class="step-row"><div class="step-num">1</div><p>Revisar de inmediato con Arturo el protocolo de seguridad de la información al compartir pantalla — es no negociable.</p></div>
+    <div class="step-row"><div class="step-num">2</div><p>Practicar el argumentario de objeción de precio (ancla por usuario/día) antes de la próxima reunión con prospecto.</p></div>
+    <div class="step-row"><div class="step-num">3</div><p>Ejercicios de ritmo de habla cronometrados hasta llegar a 160–180 ppm.</p></div>
+    <div class="step-row"><div class="step-num">4</div><p>Grabar Demo 4 y repetir la tabla de calificación para confirmar que el avance se sostiene.</p></div>
   </div>
 </section>
 
@@ -691,9 +762,11 @@
         document.querySelectorAll('.score-row').forEach(row=>{
           const s1 = parseFloat(row.dataset.s1);
           const s2 = parseFloat(row.dataset.s2);
+          const s3 = parseFloat(row.dataset.s3);
           const fills = row.querySelectorAll('.bar-fill');
           fills[0].style.width = (s1/7*100) + '%';
           fills[1].style.width = (s2/7*100) + '%';
+          if(fills[2] && !isNaN(s3)){ fills[2].style.width = (s3/7*100) + '%'; }
         });
         scoreIO.disconnect();
       }
